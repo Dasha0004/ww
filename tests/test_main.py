@@ -1,29 +1,7 @@
 import unittest
 
-from main import Category, Product
-
-
-class Product:
-    def __init__(self, name: str, description: str, price: float, quantity: int):
-        self.name = name
-        self.description = description
-        self.price = price
-        self.quantity = quantity
-
-
-class Category:
-    total_categories = 0
-    total_products = 0
-
-    def __init__(self, name: str, description: str, products=None):
-        if products is None:
-            products = []
-        self.name = name
-        self.description = description
-        self.products = products
-
-        Category.total_categories += 1
-        Category.total_products += len(products)
+from src.main_category import Category
+from src.main_product import Product
 
 
 class TestProductCategory(unittest.TestCase):
@@ -48,7 +26,7 @@ class TestProductCategory(unittest.TestCase):
     def test_total_counts(self):
         # Сбросим счетчики, чтобы тесты не влияли друг на друга
         Category.total_categories = 0
-        Category.total_products = 0
+        Category.total_product = 0
 
         c1 = Category(
             "Books",
@@ -63,7 +41,7 @@ class TestProductCategory(unittest.TestCase):
         )
 
         self.assertEqual(Category.total_categories, 2)
-        self.assertEqual(Category.total_products, 3)
+        self.assertEqual(Category.total_product, 3)
 
 
 if __name__ == "__main__":
