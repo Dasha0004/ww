@@ -1,6 +1,6 @@
 import unittest
 
-from main_ООП import Category, Product
+from main import Category, Product
 
 
 class Product:
