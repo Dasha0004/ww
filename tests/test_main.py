@@ -53,9 +53,14 @@ class TestProductCategory(unittest.TestCase):
         c1 = Category(
             "Books",
             "Reading materials",
-            [Product("Book1", "Fiction book", 12.5, 100), Product("Book2", "Science book", 15.0, 75)],
+            [
+                Product("Book1", "Fiction book", 12.5, 100),
+                Product("Book2", "Science book", 15.0, 75),
+            ],
         )
-        c2 = Category("Stationery", "Office supplies", [Product("Pen", "Blue pen", 1.0, 500)])
+        c2 = Category(
+            "Stationery", "Office supplies", [Product("Pen", "Blue pen", 1.0, 500)]
+        )
 
         self.assertEqual(Category.total_categories, 2)
         self.assertEqual(Category.total_products, 3)
