@@ -2,7 +2,8 @@ class Product:
     def __init__(self, name: str, description: str, price: float, quantity: int):
         self.name = name
         self.description = description
-        self.price = price
+        self._price = None  # Инициализация приватного атрибута
+        self.price = price  # Через сеттер с проверкой
         self.quantity = quantity
 
     @classmethod
@@ -21,6 +22,5 @@ class Product:
     @price.setter
     def price(self, value):
         if value <= 0:
-            print("Цена не должна быть нулевая или отрицательная")
-        else:
-            self._price = value
+            raise ValueError("Цена не должна быть нулевая или отрицательная")
+        self._price = value
