@@ -33,6 +33,21 @@ class TestCategory(unittest.TestCase):
     def test_products_property_empty_list(self):
         self.assertEqual(self.category.products, [])
 
+    def test_str_output(self):
+        products = [
+            Product("Товар 1", 5),
+            Product("Товар 2", 10),
+            Product("Товар 3", 0),
+        ]
+        category = Category("Категория А", products)
+        expected = "Категория А, количество продуктов: 15 шт."
+        self.assertEqual(str(category), expected)
+
+    def test_str_empty_products(self):
+        category = Category("Пустая категория", [])
+        expected = "Пустая категория, количество продуктов: 0 шт."
+        self.assertEqual(str(category), expected)
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -57,6 +57,25 @@ class TestProductPrice(unittest.TestCase):
         self.assertEqual(p.price, 200)
         self.assertEqual(p.quantity, 10)
 
+    def test_str_output(self):
+        product = Product("Товар А", "Описание", 100.99, 5)
+        expected_str = "Товар А, 100 руб. Остаток: 5 шт."
+        self.assertEqual(str(product), expected_str)
+
+    def test_add_product_prices(self):
+        a = Product("Товар А", "Описание А", 100, 10)
+        b = Product("Товар Б", "Описание Б", 200, 2)
+        self.assertEqual(a + b, 100 * 10 + 200 * 2)  # 1400
+
+    def test_add_with_non_product(self):
+        a = Product("Товар А", "Описание А", 100, 10)
+        self.assertEqual(a.__add__(5), NotImplemented)
+
+    def test_add_commutativity(self):
+        a = Product("Товар А", "Описание А", 50, 4)
+        b = Product("Товар Б", "Описание Б", 30, 6)
+        self.assertEqual(a + b, b + a)
+
 
 if __name__ == "__main__":
     unittest.main()
