@@ -30,8 +30,48 @@ class Product:
         return f"{self.name}, {int(self.price)} руб. Остаток: {self.quantity} шт."
 
     def __add__(self, other):
-        if not isinstance(other, Product):
-            return NotImplemented
+        # Проверяем, что other — объект того же класса, что и self
+        if type(self) != type(other):
+            raise TypeError(
+                f"Нельзя сложить объекты разных типов: {type(self).__name__} и {type(other).__name__}"
+            )
+        # Если типы совпадают, считаем сумму стоимости товаров
         total_cost_self = self.price * self.quantity
         total_cost_other = other.price * other.quantity
         return total_cost_self + total_cost_other
+
+
+class Smartphone(Product):
+    def __init__(
+        self,
+        name: str,
+        description: str,
+        price: float,
+        quantity: int,
+        efficiency: float,
+        model: str,
+        memory: int,
+        color: str,
+    ):
+        super().__init__(name, description, price, quantity)
+        self.efficiency = efficiency
+        self.model = model
+        self.memory = memory
+        self.color = color
+
+
+class LawnGrass(Product):
+    def __init__(
+        self,
+        name: str,
+        description: str,
+        price: float,
+        quantity: int,
+        country: str,
+        germination_period: int,
+        color: str,
+    ):
+        super().__init__(name, description, price, quantity)
+        self.country = country
+        self.germination_period = germination_period
+        self.color = color

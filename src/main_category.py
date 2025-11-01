@@ -11,6 +11,12 @@ class Category:
         Category.total_product += sum(p.stock for p in self.__products)
 
     def add_product(self, product):
+        from src.main_product import Product
+
+        if not isinstance(product, Product):
+            raise TypeError(
+                "Можно добавлять только объекты товаров (Product или его наследники)"
+            )
         self.__products.append(product)
         Category.total_product += product.stock  # добавляем количество товара
 
