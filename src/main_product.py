@@ -1,19 +1,23 @@
-class Product:
+from abc import ABC, abstractmethod
+
+
+class InitInfoMixin:
+    def __init__(self, *args, **kwargs):
+        # Вывод информации о классе и параметрах
+        print(
+            f"Создан объект класса {self.__class__.__name__} с параметрами args={args}, kwargs={kwargs}"
+        )
+        # Вызываем следующий __init__ в MRO
+        super().__init__(*args, **kwargs)
+
+
+class BaseProduct(ABC):
     def __init__(self, name: str, description: str, price: float, quantity: int):
         self.name = name
         self.description = description
         self._price = None
-        self.price = price  # Через сеттер с проверкой
+        self.price = price
         self.quantity = quantity
-
-    @classmethod
-    def new_product(cls, product_data: dict):
-        return cls(
-            name=product_data.get("name"),
-            description=product_data.get("description"),
-            price=product_data.get("price"),
-            quantity=product_data.get("quantity"),
-        )
 
     @property
     def price(self):
@@ -25,20 +29,24 @@ class Product:
             raise ValueError("Цена не должна быть нулевая или отрицательная")
         self._price = value
 
+    @abstractmethod
     def __str__(self):
-        # Приводим цену к целому числу для вывода без копеек
-        return f"{self.name}, {int(self.price)} руб. Остаток: {self.quantity} шт."
+        pass
 
     def __add__(self, other):
-        # Проверяем, что other — объект того же класса, что и self
         if type(self) != type(other):
             raise TypeError(
                 f"Нельзя сложить объекты разных типов: {type(self).__name__} и {type(other).__name__}"
             )
-        # Если типы совпадают, считаем сумму стоимости товаров
-        total_cost_self = self.price * self.quantity
-        total_cost_other = other.price * other.quantity
-        return total_cost_self + total_cost_other
+        return self.price * self.quantity + other.price * other.quantity
+
+
+class Product(InitInfoMixin, BaseProduct):
+    def __init__(self, name: str, description: str, price: float, quantity: int):
+        super().__init__(name, description, price, quantity)
+
+    def __str__(self):
+        return f"{self.name}, {int(self.price)} руб. Остаток: {self.quantity} шт."
 
 
 class Smartphone(Product):

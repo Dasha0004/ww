@@ -18,7 +18,9 @@ class Category:
                 "Можно добавлять только объекты товаров (Product или его наследники)"
             )
         self.__products.append(product)
-        Category.total_product += getattr(product, 'stock', 0)  # безопасно добавляем stock
+        Category.total_product += getattr(
+            product, "stock", 0
+        )  # безопасно добавляем stock
 
     @property
     def products(self):

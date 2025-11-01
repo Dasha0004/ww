@@ -142,6 +142,32 @@ class TestProductPrice(unittest.TestCase):
         with self.assertRaises(TypeError):
             _ = self.smartphone1 + dummy
 
+    def setUp(self):
+        # Перенаправляем вывод в буфер
+        self.captured_output = StringIO()
+        self.original_stdout = sys.stdout
+        sys.stdout = self.captured_output
+
+    def tearDown(self):
+        # Восстанавливаем стандартный вывод
+        sys.stdout = self.original_stdout
+
+    def test_init_prints_info(self):
+        p = Product("Тест", "Описание", 1000.0, 5)
+        output = self.captured_output.getvalue().strip()
+        expected_start = "Создан объект класса Product с параметрами"
+        self.assertTrue(
+            output.startswith(expected_start),
+            "Вывод __init__ должен содержать название класса и параметры",
+        )
+
+    def test_attributes_set_correctly(self):
+        p = Product("Тест", "Описание", 2000.0, 3)
+        self.assertEqual(p.name, "Тест")
+        self.assertEqual(p.description, "Описание")
+        self.assertEqual(p.price, 2000.0)
+        self.assertEqual(p.quantity, 3)
+
 
 if __name__ == "__main__":
     unittest.main()
